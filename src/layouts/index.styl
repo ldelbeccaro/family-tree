@@ -1,0 +1,38 @@
+body
+  align-items center
+  background-color #f8f8f8
+  color #142234
+  display flex
+  font-family 'Roboto', sans-serif
+  justify-content center
+
+  .body-wrapper
+    padding 48px 100px
+
+    a
+      color #3b81ff
+      text-decoration none
+      transition color 0.1s linear
+
+      &:hover
+        color #5591ff
+
+    .header
+      font-size 22px
+      font-weight 500
+      margin 24px 0
+      text-transform capitalize
+
+    .view-selection
+      display flex
+      justify-content center
+
+      .view
+        color #3b81ff
+        cursor pointer
+        margin 0 24px
+
+        &.selected
+          color #142234
+          font-weight 500
+          text-decoration underline

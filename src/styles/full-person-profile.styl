@@ -1,0 +1,63 @@
+.full-person-profile
+  position fixed
+  z-index 11
+  left 0
+  right 0
+  margin auto
+  max-width 600px
+
+  .background
+    background-color rgba(0, 0, 0, 0.2)
+    height 120%
+    position fixed
+    left -60px
+    top -60px
+    width 120%
+    z-index 5
+
+  .modal
+    background-color white
+    border-radius 3px
+    box-shadow 0 1px 2px 0 rgba(75,96,109,0.19), 0 0 1px 0 rgba(75,96,109,0.15)
+    overflow scroll
+    padding 32px 48px
+    position relative
+    z-index 12
+
+    .close
+      cursor pointer
+      position absolute
+      right 48px
+
+    .header-section
+      align-items center
+      display flex
+      margin-bottom 40px
+
+      .image
+        max-height 100px
+        margin-right 24px
+
+      .section
+        margin 0
+
+        .name
+          font-size 20px
+          font-weight 600
+          margin 16px 0
+
+    .section
+      margin 40px 0
+
+      .section-header
+        font-size 18px
+        font-weight 600
+        margin 20px 0
+
+      .info
+        display grid
+        grid-template-columns 100px auto
+        margin 16px 0
+
+        .info-header
+          font-weight 500
