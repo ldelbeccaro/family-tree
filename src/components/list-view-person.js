@@ -9,7 +9,7 @@ export default ({ person, onClickPerson }) => {
   return (
     <div
       className='list-view-person'
-      onClick={() => onClickPerson(person.idx)}
+      onClick={() => onClickPerson(person.id)}
     >
       <img className='image' src={imageUrl} alt='' />
       <div className='info-section'>

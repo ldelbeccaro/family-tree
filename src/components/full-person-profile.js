@@ -1,5 +1,6 @@
 import React from 'react'
 
+import PersonLink from '../components/person-link'
 import profileImage from '../images/profile-image.jpeg'
 
 import '../styles/full-person-profile.styl'
@@ -98,20 +99,61 @@ class FullPersonProfile extends React.Component {
             <div className='section-header'>Immediate Family</div>
             <div className='info'>
               <div className='info-header'>Mother</div>
-              <div className='info-value'>{person.mother ? person.mother.name : ``}</div>
+              <div className='info-value'>{
+                person.mother ?
+                  <PersonLink
+                    person={person.mother}
+                    onClickPerson={this.props.onClickPerson}
+                  /> : ``
+                }
+              </div>
             </div>
             <div className='info'>
               <div className='info-header'>Father</div>
-              <div className='info-value'>{person.father ? person.father.name : ``}</div>
+              <div className='info-value'>{
+                person.father ?
+                  <PersonLink
+                    person={person.father}
+                    onClickPerson={this.props.onClickPerson}
+                  /> : ``
+                }
+              </div>
             </div>
             <div className='info'>
               <div className='info-header'>Spouse</div>
-              <div className='info-value'>{person.spouse ? person.spouse.name : `None`}</div>
+              <div className='info-value'>{
+                person.spouse ?
+                  <PersonLink
+                    person={person.spouse}
+                    onClickPerson={this.props.onClickPerson}
+                  /> : `None`
+                }
+              </div>
             </div>
             <div className='info'>
               <div className='info-header'>Children</div>
-              <div className='info-value'>{person.contentfulchildren ? person.contentfulchildren.map(child => child.name).join(`, `) : `None`}</div>
+              <div className='info-value'>{
+                person.contentfulchildren ?
+                  person.contentfulchildren.map((child, idx) => (
+                    <div className='person-link-container' key={child.id}>
+                      <PersonLink
+                        person={child}
+                        onClickPerson={this.props.onClickPerson}
+                      />
+                      {idx !== person.contentfulchildren.length - 1 &&
+                        <div className='separator'></div>
+                      }
+                    </div>
+                  )) : `None`
+                }
+              </div>
             </div>
+          </div>
+          <div className='section'>
+            <a
+              className='view-in-tree'
+              onClick={() => this.props.onClickViewTree(person.id)}
+            >View in family tree</a>
           </div>
         </div>
       </div>

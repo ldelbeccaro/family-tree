@@ -1,84 +1,45 @@
 import React from 'react'
 
-import ListView from '../components/list-view'
-import TreeView from '../components/tree-view'
-import FullPersonProfile from '../components/full-person-profile'
+import App from '../components/app'
 
 class RootIndex extends React.Component {
   constructor() {
     super()
 
     this.state = {
-      view: `tree`,
-      searchTerm: ``,
-      selectedPerson: null,
+      password: ``,
     }
 
-    this.onClickPerson = this.onClickPerson.bind(this)
-    this.onClickClose = this.onClickClose.bind(this)
+    this.updatePassword = this.updatePassword.bind(this)
   }
 
-  onClickPerson(personIdx) {
-    this.setState({selectedPerson: personIdx})
-
-    // if (typeof window !== `undefined`) {
-    //   const person = this.props.data.allContentfulPerson.edges[itemIdx].node
-    //   window.mixpanel.track('Person Clicked', {
-    //     'Person Name': person.name,
-    //     'Person Birthday': person.birthday,
-    //     'Person Email': person.email,
-    //   })
-    // }
-  }
-
-  onClickClose() {
-    // set person to default
-    this.setState({selectedPerson: null})
+  updatePassword(e) {
+    e.preventDefault()
+    const formData = new FormData(e.target)
+    const password = formData.get(`password`)
+    this.setState({password})
   }
 
   render() {
-    const people = this.props.data.allContentfulPerson.edges.map((person, idx) => {
-      const indexedPerson = person.node
-      indexedPerson.idx = idx
-      return indexedPerson
-    })
-    const listView = this.state.view === `list` || !!this.state.searchTerm
+    // TODO: set environment password and check it here
+    const passwordMet = true // this.state.password === process.env.FAMILY_PASSWORD
 
     return (
       <div>
-        <div className='view-selection'>
-          <div
-            className={`view ${this.state.view === `tree` ? `selected` : ``}`}
-            onClick={() => this.setState({view: `tree`})}
-            >Family Tree View</div>
-          <div
-            className={`view ${this.state.view === `list` ? `selected` : ``}`}
-            onClick={() => this.setState({view: `list`})}
-          >List View</div>
-        </div>
-
-        <input className='search-bar' value={this.state.searchTerm} />
-
-        {this.state.selectedPerson !== null &&
-          <FullPersonProfile
-            person={people[this.state.selectedPerson]}
-            onClickClose={this.onClickClose}
-          />
+        {!passwordMet &&
+          <div className='password-entry'>
+            {!!this.state.password &&
+              <div className='error'>Wrong password</div>
+            }
+            <form onSubmit={this.updatePassword}>
+              <div className='password-entry-label'>Enter password:</div>
+              <input name='password' type='password' className='password-entry-input' />
+              <input type='submit' value='Enter' />
+            </form>
+          </div>
         }
-
-        <div className='header'>{!!this.state.searchTerm ? `Search` : `${this.state.view} View`}</div>
-
-        {!listView &&
-          <TreeView
-            people={people}
-            onClickPerson={this.onClickPerson}
-          />
-        }
-        {listView &&
-          <ListView
-            people={people}
-            onClickPerson={this.onClickPerson}
-          />
+        {passwordMet &&
+          <App people={this.props.data.allContentfulPerson.edges} />
         }
       </div>
     )

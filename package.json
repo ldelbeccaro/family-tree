@@ -14,6 +14,7 @@
     "gatsby-plugin-stylus": "^1.1.21",
     "gatsby-source-contentful": "^1.3.38",
     "gatsby-transformer-remark": "^1.7.32",
+    "gojs": "^1.8.27",
     "inquirer": "^5.1.0",
     "lodash": "^4.17.4",
     "yargs-parser": "^10.0.0"
