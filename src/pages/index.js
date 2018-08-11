@@ -41,6 +41,7 @@ class RootIndex extends React.Component {
         {passwordMet &&
           <App people={this.props.data.allContentfulPerson.edges} />
         }
+        <div className='footer'>Something not working? <a href='mailto:laura@lauradelbeccaro.com'>Contact Laura :)</a></div>
       </div>
     )
   }
@@ -61,6 +62,9 @@ export const query = graphql`
           address {
             childMarkdownRemark {
               html
+              internal {
+                content
+              }
             }
           }
           mother {
