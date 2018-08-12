@@ -29,6 +29,17 @@ export default ({ person, onClickPerson, onClickViewTree, onClickEdit }) => {
           }
         </div>
       </div>
+      <div className='action-section'>
+        <a
+          className='action'
+          onClick={() => onClickViewTree(person.id)}
+        >View in family tree</a>
+        <div className='separator'></div>
+        <a
+          className='action'
+          onClick={() => onClickEdit(person.id)}
+        >Edit info</a>
+      </div>
       {!person.deceased &&
         <div className='section'>
           <div className='section-header'>Contact</div>
@@ -104,16 +115,6 @@ export default ({ person, onClickPerson, onClickViewTree, onClickEdit }) => {
             }
           </div>
         </div>
-      </div>
-      <div className='section'>
-        <a
-          className='info-value'
-          onClick={() => onClickViewTree(person.id)}
-        >View in family tree</a>
-        <a
-          className='info-value'
-          onClick={() => onClickEdit(person.id)}
-        >Edit info</a>
       </div>
     </div>
   )

@@ -1,3 +1,50 @@
+@import 'variables.styl'
+
 .edit-person
+  align-items center
+  display flex
+  flex-direction column
+
   .image
-    height 80px
+    height 100px
+    margin 24px 0
+
+  .input
+    align-items center
+    display grid
+    grid-template-columns 100px auto
+    margin 12px 0
+    width 100%
+
+    .input-label
+      font-weight 500
+      text-transform capitalize
+
+    input, textarea
+      border 1px solid border-gray
+      border-radius 3px
+      font-size 14px
+      outline none
+      padding 8px
+
+      &:hover
+        border 1px solid dark-blue
+
+      &:focus
+        border 1px solid bright-blue
+
+  input[type="submit"]
+    background-color bright-blue
+    border none
+    border-radius 3px
+    color white
+    cursor pointer
+    font-size 16px
+    font-weight 500
+    margin 24px 0
+    padding 8px 16px
+    text-transform uppercase
+
+    &:hover
+      background-color dark-blue
+      box-shadow 0 4px 8px rgba(50,50,93,.1)

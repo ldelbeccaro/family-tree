@@ -16,7 +16,9 @@ class AllPeopleDropdown extends React.Component {
   }
 
   onClickItem(item) {
-    this.setState({open: false})
+    if (!this.props.multiSelect) {
+      this.setState({open: false})
+    }
     if (this.state.selectedPeople.map(person => person.id).includes(item.id)) {
       // de-select
       this.setState(prevState => ({selectedPeople: [...prevState.selectedPeople.filter(person => person.id !== item.id)]}))
@@ -37,28 +39,36 @@ class AllPeopleDropdown extends React.Component {
   }
 
   render() {
-    let headerText = `Select ${this.props.multiSelect ? `people` : `person`}`
+    let headerText = `-- Select ${this.props.multiSelect ? `people ` : `person`} --`
     if (this.state.selectedPeople.length === 1) headerText = this.state.selectedPeople[0].name
     else if (this.state.selectedPeople.length > 1) headerText = `${this.state.selectedPeople.length} selected`
     return (
       <div className='dropdown-wrapper'>
         <input type='hidden' value={this.props.multiSelect ? JSON.stringify(this.state.selectedPeople.map(person => person.id)) : this.state.selectedPeople[0] && this.state.selectedPeople[0].id} name={this.props.fieldName} />
         <div
-          className='dropdown-header'
+          className={`dropdown-header ${headerText.startsWith(`-- Select`) ? `select` : ``} ${this.state.open ? `open` : ``}`}
           onClick={() => this.setState(prevState => ({open: !prevState.open}))}
-        >{headerText}</div>
+        >
+          {headerText}
+          <svg className='down-arrow' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="6 9 12 15 18 9"/></svg>
+        </div>
         {this.state.open &&
-          <div className='dropdown-items'>
+          <ul className='dropdown-items'>
             {this.props.people.map(person => (
               <li
                 key={person.id}
+                className={`option ${this.state.selectedPeople.map(person => person.id).includes(person.id) ? `selected` : ``}`}
                 onClick={() => this.onClickItem(person)}
               >
-                <div className={`option ${this.state.selectedPeople.map(person => person.id).includes(person.id) ? `selected` : ``}`}></div>
+                <div className='selected-check'>
+                  {this.state.selectedPeople.map(person => person.id).includes(person.id) &&
+                    <svg className='check' xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                  }
+                </div>
                 <div className='option-label'>{person.name}</div>
               </li>
             ))}
-          </div>
+          </ul>
         }
       </div>
     )

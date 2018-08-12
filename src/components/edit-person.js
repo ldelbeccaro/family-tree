@@ -91,7 +91,7 @@ export default ({ person, people }) => {
       <img className='image' src={imageUrl} alt='' />
       {[`name`, `birthday`, `email`, `phone`].map(field => (
         <div className='input' key={field}>
-          <div className='input-label'>{`${field}:`}</div>
+          <div className='input-label'>{field}</div>
           <input
             name={field}
             value={person[field]}
@@ -100,7 +100,7 @@ export default ({ person, people }) => {
         </div>
       ))}
       <div className='input'>
-        <div className='input-label'>Address:</div>
+        <div className='input-label'>Address</div>
         <textarea
           name='address'
           value={person.address ? person.address.childMarkdownRemark.internal.content : ``}
@@ -109,7 +109,7 @@ export default ({ person, people }) => {
       </div>
       {[`mother`, `father`, `spouse`, `children`].map(field => (
         <div className='input' key={field}>
-          <div className='input-label'>{`${field}:`}</div>      
+          <div className='input-label'>{field}</div>      
           <AllPeopleDropdown
             people={people}
             multiSelect={field === `children`}
@@ -118,7 +118,9 @@ export default ({ person, people }) => {
           />
         </div>
       ))}
-      <input type='submit' value='Save' />
+      <div className='submit-container'>
+        <input type='submit' value='Save' />
+      </div>
     </form>
   )
 }

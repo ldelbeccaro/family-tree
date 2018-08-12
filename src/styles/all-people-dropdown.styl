@@ -1,2 +1,61 @@
+@import 'variables.styl'
+
 .dropdown-wrapper
-  margin 8px
+  font-size 14px
+  position relative
+
+  .dropdown-header
+    align-items center
+    border 1px solid border-gray
+    border-radius 3px
+    cursor pointer
+    display flex
+    padding 10px 8px
+    position relative
+
+    &:hover
+      border 1px solid dark-blue
+
+    &:focus
+      border 1px solid bright-blue
+
+    &.select
+      color #a1a6ad
+
+    &.open
+      border 1px solid bright-blue
+      border-radius 3px 3px 0 0
+      border-bottom 1px solid transparent
+
+    .down-arrow
+      color text-gray
+      position absolute
+      right 8px
+
+  .dropdown-items
+    background white
+    border 1px solid bright-blue
+    border-top 1px solid border-gray
+    border-radius 0 0 3px 3px
+    list-style none
+    position absolute
+    top 36px
+    width calc(100% - 2px)
+    z-index 1
+
+    .option
+      align-items center
+      cursor pointer
+      display grid
+      grid-template-columns 30px auto
+      padding 10px 8px
+
+      &:hover
+        background-color border-gray
+
+      &.selected
+        background-color bright-blue
+        color white
+
+      svg.check
+        height 16px

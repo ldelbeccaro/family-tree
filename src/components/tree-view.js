@@ -3,6 +3,8 @@ import React from 'react'
 import { initDiagram, myDiagram } from '../helpers/tree'
 import profileImage from '../images/profile-image.jpeg'
 
+import '../styles/tree-view.styl'
+
 class TreeView extends React.Component {
   componentDidMount() {
     const data = this.props.people.map(person => {
@@ -52,32 +54,15 @@ class TreeView extends React.Component {
   render() {
     return (
       <div className='tree-view'>
-        <a id='zoom-to-fit'>Zoom to Fit</a>
-        <a id='center-root'>Center Root</a>
+        <div className='actions'>
+          <a id='zoom-to-fit'>Zoom to Fit</a>
+          <div className='separator'></div>
+          <a id='center-root'>Center Root</a>
+        </div>
         <div id='go-js-diagram' style={{width: `100%`, height: `600px`}}></div>
       </div>
     )
   }
 }
-
-// const TreeView = ({ people, onClickPerson }) => {
-//   const initialCouple = [`c1s6BqGyLKQaq6CO4QmseMo`, `c34AmL0LEpquWo2Oo8awO6U`]
-
-//   return (
-//     <div className='tree-view'>
-//       <div id='go-js-diagram'></div>
-//       {/* {coupleWithChildren(peopleById, initialCouple)} */}
-//       {/* {people.map(person => {
-//         return (
-//           <TreeViewPerson
-//             key={person.name}
-//             person={person}
-//             onClickPerson={onClickPerson}
-//           />
-//         )
-//       })} */}
-//     </div>
-//   )
-// }
 
 export default TreeView

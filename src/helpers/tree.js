@@ -29,7 +29,7 @@ function initDiagram(data, selectedItem) {
     $(go.Node, "Vertical",
       { background: "#FFFFFF", padding: 6, cursor: "pointer", click: onNodeClick },
       $(go.Picture,
-        { margin: 10, width: 50, height: 50 },
+        { margin: 10, width: 72, height: 72 },
         new go.Binding("source")
       ),
       $(go.TextBlock,

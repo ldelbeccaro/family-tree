@@ -110,27 +110,39 @@ class App extends React.Component {
     const showModal = !!this.state.editingPerson || !!this.state.selectedPerson
 
     return (
-      <div>
-        <div className='view-selection'>
-          <div
-            className={`view ${listView ? `` : `selected`}`}
-            onClick={() => this.setState({view: `tree`})}
-            >Family Tree View</div>
-          <div
-            className={`view ${listView ? `selected` : ``}`}
-            onClick={() => this.setState({view: `list`})}
-          >List View</div>
+      <div className='app-container'>
+        <div className='site-header'>
+          <div className='header-container'>
+            <h1>Del Beccaro Family Tree</h1>
+            <div className='nav'>
+              <div className='search-bar'>
+                <svg className="search-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" data-reactid="1001"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+                <input value={this.state.searchTerm} onChange={this.updateSearchTerm} placeholder='Search (name, address, email, phone)' />
+              </div>
+              <div className='view-selection'>
+                <div
+                  className={`view ${listView ? `` : `selected`}`}
+                  onClick={() => this.setState({view: `tree`})}
+                  >Family Tree View</div>
+                <div
+                  className={`view ${listView ? `selected` : ``}`}
+                  onClick={() => this.setState({view: `list`})}
+                >List View</div>
+              </div>
+            </div>
+          </div>
         </div>
-
-        <input className='search-bar' value={this.state.searchTerm} onChange={this.updateSearchTerm} />
 
         {showModal &&
           <Modal onClickClose={this.onClickClose}>
             {!!this.state.editingPerson &&
-              <EditPerson
-                people={allPeople}
-                person={peopleById[this.state.editingPerson]}
-              />
+              <div>
+                <svg onClick={() => this.setState({editingPerson: null})} className="back-button" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+                <EditPerson
+                  people={allPeople}
+                  person={peopleById[this.state.editingPerson]}
+                />
+              </div>
             }
             {!this.state.editingPerson && !!this.state.selectedPerson &&
               <FullPersonProfile

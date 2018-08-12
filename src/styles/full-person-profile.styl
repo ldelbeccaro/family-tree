@@ -1,8 +1,9 @@
+@import 'variables.styl'
+
 .full-person-profile
   .header-section
     align-items center
     display flex
-    margin-bottom 40px
 
     .image
       max-height 100px
@@ -16,24 +17,29 @@
         font-weight 600
         margin 16px 0
 
+  .action-section
+    align-items center
+    display flex
+    margin 24px 0 -12px
+
+    .action
+      cursor pointer
+
   .section
-    margin 40px 0
+    margin 48px 0
 
     .section-header
-      font-size 18px
-      font-weight 600
+      font-size 20px
       margin 20px 0
 
     .info
       display grid
       grid-template-columns 100px auto
-      margin 16px 0
+      margin 20px 0
 
       .info-header
         font-weight 500
 
       .info-value
+        color light-text-gray
         display flex
-
-    .view-in-tree
-      cursor pointer
