@@ -59,6 +59,7 @@ export const query = graphql`
           birthday(formatString: "M/D/YYYY")
           email
           phone
+          maidenName
           address {
             childMarkdownRemark {
               html

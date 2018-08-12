@@ -16,7 +16,7 @@ export default ({ person, onClickPerson, onClickViewTree, onClickEdit }) => {
       <div className='header-section'>
         <img className='image' src={imageUrl} alt='' />
         <div className='section'>
-          <h3 className='name'>{person.name}</h3>
+          <h3 className='name'>{`${person.name}${person.maidenName ? ` (${person.maidenName})` : ``}`}</h3>
           <div className='info'>
             <div className='info-header'>Birthday</div>
             <div className='info-value'>{person.birthday}</div>
@@ -56,7 +56,7 @@ export default ({ person, onClickPerson, onClickViewTree, onClickEdit }) => {
               <div className='info-header'>Address</div>
               <div
                 className='info-value'
-                dangerouslySetInnerHTML={{__html: person.address.childMarkdownRemark.html}}
+                dangerouslySetInnerHTML={{__html: person.address.childMarkdownRemark.html.replace(`\n`, `<br>`)}}
               />
             </div>
           }

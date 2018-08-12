@@ -106,6 +106,7 @@ class App extends React.Component {
       peopleById[person.id] = person
     })
     const listView = this.state.view === `list` || !!this.state.searchTerm
+    const addNewPerson = this.state.editingPerson === -1
 
     const showModal = !!this.state.editingPerson || !!this.state.selectedPerson
 
@@ -121,13 +122,17 @@ class App extends React.Component {
               </div>
               <div className='view-selection'>
                 <div
-                  className={`view ${listView ? `` : `selected`}`}
+                  className={`view ${listView && !addNewPerson ? `` : `selected`}`}
                   onClick={() => this.setState({view: `tree`})}
-                  >Family Tree View</div>
+                  >Family Tree</div>
                 <div
-                  className={`view ${listView ? `selected` : ``}`}
+                  className={`view ${listView && !addNewPerson ? `selected` : ``}`}
                   onClick={() => this.setState({view: `list`})}
-                >List View</div>
+                >List</div>
+                <div
+                  className={`view ${addNewPerson ? `selected` : ``}`}
+                  onClick={() => this.setState({editingPerson: -1})}
+                >Add Person</div>
               </div>
             </div>
           </div>
@@ -141,6 +146,7 @@ class App extends React.Component {
                 <EditPerson
                   people={allPeople}
                   person={peopleById[this.state.editingPerson]}
+                  onClickClose={this.onClickClose}
                 />
               </div>
             }
