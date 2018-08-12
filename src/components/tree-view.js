@@ -55,9 +55,9 @@ class TreeView extends React.Component {
     return (
       <div className='tree-view'>
         <div className='actions'>
-          <a id='zoom-to-fit'>Zoom to Fit</a>
+          <a id='zoom-to-fit' onClick={() => window.mixpanel.track(`Tree Action Clicked`, {Action: `Zoom to Fit`})}>Zoom to Fit</a>
           <div className='separator'></div>
-          <a id='center-root'>Center Root</a>
+          <a id='center-root' onClick={() => window.mixpanel.track(`Tree Action Clicked`, {Action: `Center Root`})}>Center Root</a>
         </div>
         <div id='go-js-diagram' style={{width: `100%`, height: `600px`}}></div>
       </div>

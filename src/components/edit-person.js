@@ -69,6 +69,8 @@ class EditPerson extends React.Component {
 
     if (personId) {
       // Update entry
+      window.mixpanel.track('Person Edited', {'Person Name': this.state.name})
+
       client.getSpace(process.env.CONTENTFUL_SPACE_ID)
         .then((space) => space.getEntry(personId))
         .then((entry) => {
@@ -85,6 +87,8 @@ class EditPerson extends React.Component {
         .catch(console.error)
     } else {
       // Create new entry
+      window.mixpanel.track('Person Created', {'Person Name': this.state.name})
+
       client.getSpace(process.env.CONTENTFUL_SPACE_ID)
         .then((space) => {
           const fields = {}

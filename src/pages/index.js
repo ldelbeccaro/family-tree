@@ -13,6 +13,10 @@ class RootIndex extends React.Component {
     this.updatePassword = this.updatePassword.bind(this)
   }
 
+  componentDidMount() {
+    window.mixpanel.track('App Loaded')
+  }
+
   updatePassword(e) {
     e.preventDefault()
     const formData = new FormData(e.target)
@@ -41,7 +45,9 @@ class RootIndex extends React.Component {
         {passwordMet &&
           <App people={this.props.data.allContentfulPerson.edges} />
         }
-        <div className='footer'>Something not working? <a href='mailto:laura@lauradelbeccaro.com'>Contact Laura :)</a></div>
+        <div className='footer'>
+          Something not working? <a href='mailto:laura@lauradelbeccaro.com' onClick={() => window.mixpanel.track('Contact Laura Clicked')}>Contact Laura :)</a>
+        </div>
       </div>
     )
   }

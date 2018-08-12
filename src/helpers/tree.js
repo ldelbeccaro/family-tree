@@ -11,7 +11,6 @@ function initDiagram(data, selectedItem) {
       {
         initialAutoScale: go.Diagram.Uniform,
         initialContentAlignment: go.Spot.Center,
-        allowVerticalScroll: false,
         "undoManager.isEnabled": true, // enable undo & redo
         "draggingTool.isEnabled": false,  // disable dragging nodes
         // when a node is selected, draw a big yellow circle behind it
@@ -61,6 +60,12 @@ function initDiagram(data, selectedItem) {
       $(go.Shape, { strokeWidth: 6, stroke: "#1fc600" })
   ));
 
+  myDiagram.linkTemplateMap.add("Divorce",  // for marriage relationships
+    $(go.Link,
+      { selectable: false },
+      $(go.Shape, { strokeWidth: 2, stroke: "#c6001f" })
+  ));
+
   setupDiagram(myDiagram, data, selectedItem);
 }
 
@@ -105,7 +110,7 @@ function findMarriage(diagram, a, b) {  // A and B are node keys
     while (it.next()) {
       var link = it.value;
       // Link.data.category === "Marriage" means it's a marriage relationship
-      if (link.data !== null && link.data.category === "Marriage") return link;
+      if (link.data !== null && ([`Marriage`, `Divorce`].includes(link.data.category))) return link;
     }
   }
   return null;
@@ -133,7 +138,12 @@ function setupMarriages(diagram) {
           var mlab = { s: "LinkLabel" };
           model.addNodeData(mlab);
           // add the marriage link itself, also referring to the label node
-          var mdata = { from: key, to: spouse, labelKeys: [mlab.key], category: "Marriage" };
+          var spouseNode = diagram.findNodeForKey(spouse);
+          var category = "Marriage";
+          if (spouse !== null && (!spouseNode.data.ux || !spouseNode.data.ux.includes(key)) || !uxs.includes(spouseNode.data.key)) {
+            category = "Divorce";
+          }
+          var mdata = { from: key, to: spouse, labelKeys: [mlab.key], category };
           model.addLinkData(mdata);
         }
       }

@@ -30,14 +30,10 @@ class App extends React.Component {
   onClickPerson(personId) {
     this.setState({selectedPerson: personId})
 
-    // if (typeof window !== `undefined`) {
-    //   const person = this.props.people[itemIdx].node
-    //   window.mixpanel.track('Person Clicked', {
-    //     'Person Name': person.name,
-    //     'Person Birthday': person.birthday,
-    //     'Person Email': person.email,
-    //   })
-    // }
+    if (typeof window !== `undefined`) {
+      const person = this.props.people.filter(person => person.id === personId)
+      window.mixpanel.track('Person Clicked', {'Person Name': person.name})
+    }
   }
 
   onClickViewTree(personId) {
@@ -46,6 +42,11 @@ class App extends React.Component {
       selectedTreePerson: personId,
       selectedPerson: null
     })
+
+    if (typeof window !== `undefined`) {
+      const person = this.props.people.filter(person => person.id === personId)
+      window.mixpanel.track('View in Tree Clicked', {'Person Name': person.name})
+    }
   }
 
   onClickClose() {
@@ -55,10 +56,19 @@ class App extends React.Component {
 
   onClickEdit(personId) {
     this.setState({editingPerson: personId})
+
+    if (typeof window !== `undefined`) {
+      const person = this.props.people.filter(person => person.id === personId)
+      window.mixpanel.track('Edit Person Clicked', {'Person Name': person.name})
+    }
   }
 
   updateSearchTerm(e) {
     this.setState({searchTerm: e.target.value})
+
+    if (typeof window !== `undefined`) {
+      window.mixpanel.track('Searched', {'Search Term': e.target.value})
+    }
   }
 
   checkForMatches(person, searchTerm) {
@@ -123,15 +133,15 @@ class App extends React.Component {
               <div className='view-selection'>
                 <div
                   className={`view ${listView && !addNewPerson ? `` : `selected`}`}
-                  onClick={() => this.setState({view: `tree`})}
+                  onClick={() => this.setState({view: `tree`}, () => window.mixpanel.track(`Nav Clicked`, {'Nav Link': `Tree`}))}
                   >Family Tree</div>
                 <div
                   className={`view ${listView && !addNewPerson ? `selected` : ``}`}
-                  onClick={() => this.setState({view: `list`})}
+                  onClick={() => this.setState({view: `list`}, () => window.mixpanel.track(`Nav Clicked`, {'Nav Link': `List`}))}
                 >List</div>
                 <div
                   className={`view ${addNewPerson ? `selected` : ``}`}
-                  onClick={() => this.setState({editingPerson: -1})}
+                  onClick={() => this.setState({editingPerson: -1}, () => window.mixpanel.track(`Nav Clicked`, {'Nav Link': `Add Person`}))}
                 >Add Person</div>
               </div>
             </div>
