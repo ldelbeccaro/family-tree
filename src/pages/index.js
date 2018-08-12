@@ -22,11 +22,14 @@ class RootIndex extends React.Component {
     const formData = new FormData(e.target)
     const password = formData.get(`password`)
     this.setState({password})
+
+    if (typeof window !== `undefined`) {
+      window.mixpanel.track(password === process.env.FAMILY_PASSWORD ? `Correct Password Entered` : `Incorrect Password Entered`)
+    }
   }
 
   render() {
-    // TODO: set environment password and check it here
-    const passwordMet = true // this.state.password === process.env.FAMILY_PASSWORD
+    const passwordMet = this.state.password === process.env.FAMILY_PASSWORD
 
     return (
       <div>

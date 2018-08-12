@@ -25,6 +25,54 @@ body
       &:hover
         color dark-blue
 
+    .password-entry
+      align-items center
+      display flex
+      flex-direction column
+
+      .error
+        color red
+        font-weight 500
+        margin-bottom 12px
+
+      form
+        align-items center
+        display flex
+        margin-bottom 40px
+
+        .password-entry-label
+          margin-right 8px
+
+        input[type="password"]
+          border 1px solid border-gray
+          border-radius 3px
+          font-size 14px
+          margin-right 16px
+          outline none
+          overflow hidden
+          padding 8px
+
+          &:hover
+            border 1px solid dark-blue
+
+          &:focus
+            border 1px solid bright-blue
+
+        input[type="submit"]
+          background-color bright-blue
+          border none
+          border-radius 3px
+          color white
+          cursor pointer
+          font-size 16px
+          font-weight 500
+          padding 8px 16px
+          text-transform uppercase
+
+          &:hover
+            background-color dark-blue
+            box-shadow 0 4px 8px rgba(50,50,93,.1)
+
     .app-container
       display flex
       flex-direction column
