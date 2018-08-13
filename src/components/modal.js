@@ -30,7 +30,7 @@ class Modal extends React.Component {
 
   setMaxHeight() {
     const modal = document.querySelector(`.modal`);
-    if (modal) {
+    if (modal && typeof window !== `undefined`) {
       const rect = modal.getBoundingClientRect();
       const maxHeight = window.innerHeight - rect.top - 100; // 100px of padding at bottom of screen
       modal.style.maxHeight = `${maxHeight}px`;

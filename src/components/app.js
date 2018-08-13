@@ -133,15 +133,15 @@ class App extends React.Component {
               <div className='view-selection'>
                 <div
                   className={`view ${listView && !addNewPerson ? `` : `selected`}`}
-                  onClick={() => this.setState({view: `tree`}, () => window.mixpanel.track(`Nav Clicked`, {'Nav Link': `Tree`}))}
+                  onClick={() => this.setState({view: `tree`}, () => typeof window !== `undefined` && window.mixpanel.track(`Nav Clicked`, {'Nav Link': `Tree`}))}
                   >Family Tree</div>
                 <div
                   className={`view ${listView && !addNewPerson ? `selected` : ``}`}
-                  onClick={() => this.setState({view: `list`}, () => window.mixpanel.track(`Nav Clicked`, {'Nav Link': `List`}))}
+                  onClick={() => this.setState({view: `list`}, () => typeof window !== `undefined` && window.mixpanel.track(`Nav Clicked`, {'Nav Link': `List`}))}
                 >List</div>
                 <div
                   className={`view ${addNewPerson ? `selected` : ``}`}
-                  onClick={() => this.setState({editingPerson: -1}, () => window.mixpanel.track(`Nav Clicked`, {'Nav Link': `Add Person`}))}
+                  onClick={() => this.setState({editingPerson: -1}, () => typeof window !== `undefined` && window.mixpanel.track(`Nav Clicked`, {'Nav Link': `Add Person`}))}
                 >Add Person</div>
               </div>
             </div>

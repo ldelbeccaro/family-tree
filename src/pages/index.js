@@ -14,7 +14,9 @@ class RootIndex extends React.Component {
   }
 
   componentDidMount() {
-    window.mixpanel.track('App Loaded')
+    if (typeof window !== `undefined`) {
+      window.mixpanel.track('App Loaded')
+    }
   }
 
   updatePassword(e) {
@@ -49,7 +51,7 @@ class RootIndex extends React.Component {
           <App people={this.props.data.allContentfulPerson.edges} />
         }
         <div className='footer'>
-          Something not working? <a href='mailto:laura@lauradelbeccaro.com' onClick={() => window.mixpanel.track('Contact Laura Clicked')}>Contact Laura :)</a>
+          Something not working? <a href='mailto:laura@lauradelbeccaro.com' onClick={() => typeof window !== `undefined` && window.mixpanel.track('Contact Laura Clicked')}>Contact Laura :)</a>
         </div>
       </div>
     )
