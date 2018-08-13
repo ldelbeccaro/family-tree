@@ -6,13 +6,11 @@ import profileImage from '../images/profile-image.jpeg'
 import '../styles/edit-person.styl'
 
 // TODO: figure out why netlify can't build this
-try {
-  const contentful = require('contentful-management')
+const contentful = require('contentful-management')
 
-  const client = contentful.createClient({
-    accessToken: process.env.CONTENTFUL_MANAGEMENT_API_KEY
-  })
-} catch(e) {}
+const client = contentful.createClient({
+  accessToken: process.env.GATSBY_CONTENTFUL_MANAGEMENT_API_KEY
+})
 
 class EditPerson extends React.Component {
   constructor(props) {
@@ -76,7 +74,7 @@ class EditPerson extends React.Component {
         window.mixpanel.track('Person Edited', {'Person Name': this.state.name})
       }
 
-      client.getSpace(process.env.CONTENTFUL_SPACE_ID)
+      client.getSpace(process.env.GATSBY_CONTENTFUL_SPACE_ID)
         .then((space) => space.getEntry(personId))
         .then((entry) => {
           for (const key of Object.keys(this.state)) {
@@ -96,7 +94,7 @@ class EditPerson extends React.Component {
         window.mixpanel.track('Person Created', {'Person Name': this.state.name})
       }
 
-      client.getSpace(process.env.CONTENTFUL_SPACE_ID)
+      client.getSpace(process.env.GATSBY_CONTENTFUL_SPACE_ID)
         .then((space) => {
           const fields = {}
           for (const key of Object.keys(this.state)) {
