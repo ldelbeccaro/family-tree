@@ -22,7 +22,6 @@ module.exports = {
     title: 'Del Beccaro Family Tree',
     description: 'Del Beccaro family contact information & family tree'
   },
-  pathPrefix: '/gatsby-contentful-starter',
   plugins: [
     'gatsby-plugin-react-helmet',
     'gatsby-transformer-remark',
