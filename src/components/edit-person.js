@@ -5,11 +5,14 @@ import profileImage from '../images/profile-image.jpeg'
 
 import '../styles/edit-person.styl'
 
-const contentful = require('contentful-management')
+// TODO: figure out why netlify can't build this
+try {
+  const contentful = require('contentful-management')
 
-const client = contentful.createClient({
-  accessToken: process.env.CONTENTFUL_MANAGEMENT_API_KEY
-})
+  const client = contentful.createClient({
+    accessToken: process.env.CONTENTFUL_MANAGEMENT_API_KEY
+  })
+} catch(e) {}
 
 class EditPerson extends React.Component {
   constructor(props) {
