@@ -11,6 +11,7 @@
     "contentful-management": "^5.3.2",
     "dotenv": "^6.0.0",
     "fast-levenshtein": "^2.0.6",
+    "gatsby": "^1.9.277",
     "gatsby-link": "^1.6.34",
     "gatsby-plugin-google-fonts": "0.0.4",
     "gatsby-plugin-react-helmet": "^1.0.8",
@@ -20,6 +21,7 @@
     "gojs": "^1.8.27",
     "inquirer": "^5.1.0",
     "lodash": "^4.17.4",
+    "react-helmet": "^5.2.0",
     "react-onclickoutside": "^6.7.1",
     "yargs-parser": "^10.0.0"
   },
@@ -28,7 +30,6 @@
     "chalk": "^2.3.1",
     "eslint": "^4.15.0",
     "eslint-plugin-react": "^7.5.1",
-    "gatsby": "^1.9.202",
     "gh-pages": "^1.1.0",
     "prettier": "^1.10.2"
   },
