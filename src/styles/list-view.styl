@@ -1,0 +1,39 @@
+@import 'variables.styl'
+
+.list-view
+  position relative
+
+  .sort
+    align-items center
+    display flex
+    font-size 14px
+    justify-content center
+    margin-bottom 16px
+
+    .sort-label
+      margin-right 8px
+      font-weight 600
+
+    .sort-option
+      align-items center
+      color light-text-gray
+      cursor pointer
+      display flex
+      margin 4px 8px
+      text-transform capitalize
+      transition color 0.1s linear
+
+      .sort-direction svg
+        color transparent
+        margin 0 4px
+        width 8px
+
+      &:hover
+        color text-gray
+
+      &.selected
+        color text-gray
+
+        .sort-direction svg
+          color text-gray
+          width 18px

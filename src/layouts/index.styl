@@ -40,8 +40,15 @@ body
         display flex
         margin-bottom 40px
 
+        @media(max-width: 400px)
+          flex-direction column
+
         .password-entry-label
           margin-right 8px
+
+          @media(max-width: 400px)
+            margin-right 0
+            margin-bottom 12px
 
         input[type="password"]
           border 1px solid border-gray
@@ -51,6 +58,10 @@ body
           outline none
           overflow hidden
           padding 8px
+
+          @media(max-width: 400px)
+            margin-right 0
+            margin-bottom 12px
 
           &:hover
             border 1px solid dark-blue
@@ -157,6 +168,10 @@ body
                 cursor pointer
                 margin 0 12px
                 padding 4px 0
+                transition color 0.1s linear
+
+                &:hover
+                  color text-gray
 
                 &.selected
                   border-bottom 1px solid border-gray

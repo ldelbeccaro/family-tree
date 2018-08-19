@@ -59,7 +59,10 @@ class TreeView extends React.Component {
           <div className='separator'></div>
           <a id='center-root' onClick={() => typeof window !== `undefined` && window.mixpanel.track(`Tree Action Clicked`, {Action: `Center Root`})}>Center Root</a>
         </div>
-        <div id='go-js-diagram' style={{width: `100%`, height: `600px`}}></div>
+        <div className='go-js-container'>
+          <div id='go-js-diagram' style={{width: `100%`, height: `600px`, position: `absolute`}}></div>
+          <div id='go-js-cover'></div>
+        </div>
       </div>
     )
   }

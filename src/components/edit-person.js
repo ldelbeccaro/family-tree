@@ -30,6 +30,9 @@ class EditPerson extends React.Component {
       spouse: person && person.spouse,
       children: person && person.contentfulchildren,
     }
+
+    this.fileInput = undefined
+    this.onSubmitPerson = this.onSubmitPerson.bind(this)
   }
 
   manipulateValue(field, value) {
@@ -64,10 +67,7 @@ class EditPerson extends React.Component {
     this.setState({[`${field}`]: val})
   }
 
-  onSubmitPerson(personId, e) {
-    e.preventDefault()
-    personId = personId ? personId.substr(1) : undefined
-
+  updateContentful(personId, file) {
     if (personId) {
       // Update entry
       if (typeof window !== `undefined`) {
@@ -83,6 +83,9 @@ class EditPerson extends React.Component {
               entry.fields[key] = {...entry.fields[key]}
               entry.fields[key][`en-US`] = val
             }
+          }
+          if (file) {
+            entry.fields.image = {'en-US': file}
           }
           return entry.update()
         })
@@ -103,10 +106,48 @@ class EditPerson extends React.Component {
               fields[key] = {'en-US': val}
             }
           }
+          if (file) {
+            fields.image = {'en-US': file}
+          }
           return space.createEntry('person', {fields})
         })
         .then((entry) => entry.publish())
         .catch(console.error)
+    }
+  }
+
+  onSubmitPerson(personId, e) {
+    e.preventDefault()
+    personId = personId ? personId.substr(1) : undefined
+
+    if (this.fileInput.files[0]) {
+      const file = this.fileInput.files[0]
+      client.getSpace(process.env.GATSBY_CONTENTFUL_SPACE_ID)
+        .then(space => {
+          space.createAssetFromFiles({
+            fields: {
+              title: {
+                'en-US': file.name
+              },
+              file: {
+                'en-US': {
+                  contentType: file.type,
+                  fileName: file.name,
+                  file: file
+                }
+              }
+            }
+          })
+          .then(asset => asset.processForAllLocales())
+          .then(asset => asset.publish())
+          .then(asset => {
+            const file = {"sys": {"id": asset.sys.id, "linkType": "Asset", "type": "Link"}}
+            this.updateContentful(personId, file)
+          })
+          .catch(console.error);
+        })
+    } else {
+      this.updateContentful(personId)
     }
 
     this.props.onClickClose()
@@ -133,7 +174,13 @@ class EditPerson extends React.Component {
         className='edit-person'
         onSubmit={(e) => this.onSubmitPerson(person ? person.id : undefined, e)}
       >
-        <img className='image' src={imageUrl} alt='' />
+        <div className='image-section'>
+          <img className='image' src={imageUrl} alt='' />
+          <div className='image-input'>
+            <div className='help-text'>Change image (square images work best):</div>
+            <input type='file' ref={node => this.fileInput = node} />
+          </div>
+        </div>
         {[`name`, `maidenName`, `birthday`, `email`, `phone`].map(field => (
           <div className='input' key={field}>
             <div className='input-label'>{field === `maidenName` ? `maiden name` : field}</div>
@@ -152,6 +199,7 @@ class EditPerson extends React.Component {
             value={this.state.address}
             rows='3'
             onChange={(e) => this.handleValueChange(`address`, e.target.value)}
+            data-gramm_editor='false'
           ></textarea>
         </div>
         {[`mother`, `father`, `spouse`, `children`].map(field => (
@@ -167,8 +215,9 @@ class EditPerson extends React.Component {
           </div>
         ))}
         <div className='submit-container'>
-          <input type='submit' value='Save' />
+          <input type='submit' value='Save *' />
         </div>
+        <div className='help-text'>* Changes will be displayed live if you refresh in a minute or so</div>
       </form>
     )
   }
