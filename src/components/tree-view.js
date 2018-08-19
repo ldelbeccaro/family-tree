@@ -26,11 +26,6 @@ class TreeView extends React.Component {
     const selectedItem = this.props.selectedTreePerson
     initDiagram(data, selectedItem);
 
-    // center on select
-    if (!!this.props.selectedTreePerson) {
-      myDiagram.scrollToRect(myDiagram.findNodeForKey(this.props.selectedTreePerson).actualBounds);
-    }
-
     // diagram control click listeners
     document.getElementById('zoom-to-fit').addEventListener('click', function() {
       myDiagram.zoomToFit();
@@ -47,6 +42,9 @@ class TreeView extends React.Component {
       const node = myDiagram.findNodeForKey(nextProps.selectedTreePerson)
       if (node !== null) {
         myDiagram.select(node)
+        // center on selected person
+        myDiagram.scale = 1;
+        myDiagram.scrollToRect(node.actualBounds);
       }
     }
   }
