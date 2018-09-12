@@ -12,14 +12,20 @@
     a
       cursor pointer
 
-  .go-js-container
+  #graph
+    font 10px sans-serif
+    border 1px solid light-text-gray
+    padding 12px
     height 600px
-    position relative
-    width 100%
 
-    #go-js-cover
-      background-color background-gray
-      height 72px
-      width 184px
-      z-index 3
-      position absolute
+    .node
+      cursor pointer
+
+    .link, .special-link
+      fill none
+      stroke black
+
+    .spouse
+      fill none
+      stroke green
+      stroke-width 3

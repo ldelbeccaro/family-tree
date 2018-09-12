@@ -18,13 +18,14 @@ function addHighlightAndSortInfo(item, searchInput, property) {
   if (!newItem[property]) return item;
   const lowercaseItemName = newItem[property].toLowerCase();
   const input = searchInput.toLowerCase();
+  const minMatchLength = 2
 
   const startsWithInput = lowercaseItemName.startsWith(input);
-  const longEnoughMatch = input.length > 1 && lowercaseItemName.includes(input);
+  const longEnoughMatch = input.length > minMatchLength && lowercaseItemName.includes(input);
   if (startsWithInput || longEnoughMatch) {
     newItem.highlighted = highlightMatchingString(newItem[property], input);
     // rank items that start with the input highest
-    newItem.sortLevel = startsWithInput ? 1 : 2;
+    newItem.sortLevel = startsWithInput ? 10 : 9;
   } else {
     // for all words in the search input and for all words in the item name,
     // if there are any matches, include them and sort them by Levenshtein
@@ -36,11 +37,11 @@ function addHighlightAndSortInfo(item, searchInput, property) {
       for (const inputWord of input.split(` `)) {
         if (
           itemWord.startsWith(inputWord) &&
-          inputWord.length > 1
+          inputWord.length > minMatchLength
         ) {
           inputIncludesItem = true;
           // get Levenshtein or "edit" distance of strings to sort among any matches
-          newItem.sortLevel = 3 + distance.get(lowercaseItemName, searchInput);
+          newItem.sortLevel = 8 - distance.get(lowercaseItemName, searchInput);
         }
       }
     }

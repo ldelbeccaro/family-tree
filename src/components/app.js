@@ -28,7 +28,10 @@ class App extends React.Component {
   }
 
   onClickPerson(personId) {
-    this.setState({selectedPerson: personId})
+    this.setState({
+      selectedPerson: personId,
+      selectedTreePerson: personId,
+    })
 
     if (typeof window !== `undefined`) {
       const person = this.props.people.filter(person => person.id === personId)
@@ -40,7 +43,8 @@ class App extends React.Component {
     this.setState({
       view: `tree`,
       selectedTreePerson: personId,
-      selectedPerson: null
+      selectedPerson: null,
+      searchTerm: ``,
     })
 
     if (typeof window !== `undefined`) {
@@ -74,24 +78,26 @@ class App extends React.Component {
   checkForMatches(person, searchTerm) {
     let newPerson = {...person}
     newPerson.matches = 0
+
     newPerson = addHighlightAndSortInfo(newPerson, searchTerm, `name`)
     if (newPerson.sortLevel) {
-      newPerson.matches += 1
+      newPerson.matches += newPerson.sortLevel
       newPerson.nameHighlighted = newPerson.highlighted
       newPerson.nameSortLevel = newPerson.sortLevel
     }
     newPerson = addHighlightAndSortInfo(newPerson, searchTerm, `email`)
     if (newPerson.sortLevel) {
-      newPerson.matches += 1
+      newPerson.matches += newPerson.sortLevel
       newPerson.emailHighlighted = newPerson.highlighted
       newPerson.emailSortLevel = newPerson.sortLevel
     }
     newPerson = addHighlightAndSortInfo(newPerson, searchTerm, `phone`)
     if (newPerson.sortLevel) {
-      newPerson.matches += 1
+      newPerson.matches += newPerson.sortLevel
       newPerson.phoneHighlighted = newPerson.highlighted
       newPerson.phoneSortLevel = newPerson.sortLevel
     }
+
     return newPerson
   }
 
@@ -106,15 +112,17 @@ class App extends React.Component {
         }
         return indexedPerson
       })
-    const people = allPeople
-      .filter(person => {
-        return !this.state.searchTerm || person.matches > 0
-      })
-      .sort((a, b) => a.matches - b.matches)
     const peopleById = {}
     allPeople.forEach(person => {
       peopleById[person.id] = person
     })
+    const people = allPeople
+      .filter(person => !this.state.searchTerm || person.matches > 0)
+      .sort((a, b) => {
+        if (b.matches === a.matches) return b.name < a.name ? 1 : a.name < b.name ? -1 : 0
+        return b.matches - a.matches
+      })
+
     const listView = this.state.view === `list` || !!this.state.searchTerm
     const addNewPerson = this.state.editingPerson === -1
 
@@ -184,6 +192,7 @@ class App extends React.Component {
         {listView &&
           <ListView
             people={people}
+            searchTerm={this.state.searchTerm}
             onClickPerson={this.onClickPerson}
           />
         }

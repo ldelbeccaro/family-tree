@@ -8,7 +8,6 @@ class ListView extends React.Component {
     super(props)
 
     this.state = {
-      people: props.people.sort(this.sortByName),
       sort: `name`,
       sortDirection: 1,
     }
@@ -20,7 +19,6 @@ class ListView extends React.Component {
       return {
         sort,
         sortDirection: newSortDirection,
-        people: prevState.people.sort((a, b) => this.findSortFunction(sort, a, b) * newSortDirection)
       }
     })
   }
@@ -63,9 +61,10 @@ class ListView extends React.Component {
   }
 
   render() {
-    const sortDirection = this.state.sortDirection === 1 ?
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg> : // up arrow
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg> // down arrow
+    const people = this.props.searchTerm ? this.props.people : this.props.people.sort((a, b) => this.findSortFunction(this.state.sort, a, b) * this.state.sortDirection)
+    const sortDirectionSvg = this.state.sortDirection === 1 ?
+      (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="19" x2="12" y2="5"></line><polyline points="5 12 12 5 19 12"></polyline></svg>) : // up arrow
+      (<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><line x1="12" y1="5" x2="12" y2="19"></line><polyline points="19 12 12 19 5 12"></polyline></svg>) // down arrow
     return (
       <div className='list-view'>
         <div className='sort'>
@@ -80,16 +79,16 @@ class ListView extends React.Component {
               >
                 <div className='sort-name'>{sort}</div>
                 {sort !== `upcoming birthdays` &&
-                  <div className='sort-direction'>{sortDirection}</div>
+                  <div className='sort-direction'>{sortDirectionSvg}</div>
                 }
               </div>
             )
           })}
         </div>
-        {this.state.people.map(person => {
+        {people.map(person => {
           return (
             <ListViewPerson
-              key={person.name}
+              key={person.id}
               person={person}
               onClickPerson={this.props.onClickPerson}
             />
